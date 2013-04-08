@@ -18,7 +18,7 @@ class RobotBuilder {
         def id = values['id']
         def fileNamePrefix = "Individual_${id}"
         def command = "jar -cf ${fileNamePrefix}.jar"
-        [".java", ".class", "\$MicroEnemy.class", ".properties"].each { suffix ->
+        [".java", ".class","\$MicroEnemy.class",  ".properties"].each { suffix -> 
             command += " ${robotPackage}/${fileNamePrefix}${suffix}"
         }
         def proc = command.execute(null, new File(robotDirectory))
@@ -41,11 +41,11 @@ class RobotBuilder {
         def command = "javac -cp ../lib/robocode.jar ${robotPackage}/${javaFileName}"
         def proc = command.execute(null, new File(robotDirectory))
         proc.waitFor()
-        assert proc.exitValue() == 0
         assert proc.err.text.equals("")
-//        println "return code: ${proc.exitValue()}"
-//        println "stderr: ${proc.err.text}"
-//        println "stdout: ${proc.in.text}"
+        assert proc.exitValue() == 0
+        //println "return code: ${proc.exitValue()}"
+       // println "stderr: ${proc.err.text}"
+        //println "stdout: ${proc.in.text}"
     }
     
     def buildJavaFile(values) {
