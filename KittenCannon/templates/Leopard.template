@@ -1,0 +1,63 @@
+import robocode.*;
+import robocode.util.Utils;
+
+public class Leopard extends AdvancedRobot {
+	
+/* Leopard by Exauge.
+ * Current Version: 1.1.019 - 14:21 05-09-2010
+ * This robot uses a narrow lock radar, pattern matching + ramming, and head-on charge type movement
+ * Credits to robar for a pm gun that I based on blackwidow's.
+ */
+	
+/* Version History:
+ * 1.0 - uses narrow lock radar, pattern matching + ramming, and head-on charge movement
+ * 1.1 - moves slightly when enemy fires, fires lower power bullet when further away
+ */
+	
+	static final int patDep = 32; // number of ticks to record enemy movement
+	static String eLog = "00000000000000000000008888888888"; // symbolic state of the enemy
+	static double eEner; // enemy energy
+	
+	public void run() {
+		setTurnRadarRight(Double.POSITIVE_INFINITY); // turn the radar right an infinite amount
+	}
+	
+	public void onScannedRobot(ScannedRobotEvent e) { // if we see a robot:
+		// Local variables
+			int i; // integer
+			double absB; // absolute bearing
+			int mLen = patDep; // number of ticks to record
+			int indX; // pattern index
+			double turnDir = 0;
+			
+			if(eEner > (eEner = e.getEnergy())){
+			   turnDir = Math.random() * 1.4 - .7;
+			}
+			
+			/* The Charge! */
+			setTurnRightRadians(Math.sin(absB = e.getBearingRadians()) + turnDir); // turn toward the enemy
+			setAhead(20); // CHARGE!!!
+			
+			/* Pattern Matcher */
+			absB = e.getBearingRadians(); // absolute bearing
+			eLog = String.valueOf( (char)Math.round(e.getVelocity() * Math.sin(e.getHeadingRadians() - ( absB+=getHeadingRadians() )))).concat(eLog); // record enemy pattern into symbolic state
+			while((indX = eLog.indexOf(eLog.substring(0, mLen--), (i = (int)(e.getDistance()/11)))) < 0); // decide where to fire
+			do{
+				absB += Math.asin(((byte)eLog.charAt(indX--))/e.getDistance()); // correcting absolute bearing
+			}
+			while(--i > 0); // if int is greater than zero
+			setTurnGunRightRadians(Utils.normalRelativeAngle(absB-getGunHeadingRadians())); // turn gun toward the enemy predicted position,
+			if(getEnergy() > 5){ // and if we have enough energy,
+			   if(e.getDistance() >= 90){
+			      setFire(2);
+			   }
+			   else{
+			      setFire(3); // FIRE!
+			   }
+			}
+			
+			/* Radar Lock */
+	      setTurnRadarLeft(getRadarTurnRemaining()); // Radar Lock
+		
+	}
+}
