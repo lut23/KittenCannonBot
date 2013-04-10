@@ -1,6 +1,7 @@
 package roboTree
 
-class NraNode {
+class RelativeNode {
     def parent
     def child
+    def arity = 1
 }

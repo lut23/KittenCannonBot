@@ -1,6 +1,8 @@
 package roboTree
 
-class NnaaNode {
+class NearAbsoluteNode {
     def parent
     def child
+    def arity = 1
+    
 }
