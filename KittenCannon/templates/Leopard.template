@@ -46,7 +46,7 @@ public class Leopard extends AdvancedRobot {
 				absB += Math.asin(((byte)eLog.charAt(indX--))/e.getDistance()); // correcting absolute bearing
 			}
 			while(--i > 0); // if int is greater than zero
-			setTurnGunRightRadians(Utils.normalRelativeAngle(absB-getGunHeadingRadians())); // turn gun toward the enemy predicted position,
+			setTurnGunRightRadians(${new_angle}); // turn gun toward the enemy predicted position,
 			if(getEnergy() > 5){ // and if we have enough energy,
 			   if(e.getDistance() >= 90){
 			      setFire(2);
