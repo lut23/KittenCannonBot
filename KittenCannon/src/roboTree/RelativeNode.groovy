@@ -8,4 +8,7 @@ class RelativeNode {
     def String(){
         return "Utils.normalRelativeAngle"
     }
+    def setChild(node){
+        child = node
+    }
 }

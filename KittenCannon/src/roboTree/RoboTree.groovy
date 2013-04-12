@@ -95,10 +95,12 @@ class RoboTree {
         randFunc = functions[rand.nextInt(7)]
         if(head == null){
             head = randFunc
+            if(head.arity == 0) return head
+            
         }
         randFunc.parent = node
         if(randFunc.arity != 0){
-            randFunc.setChild(grow(depth +1 ,max , randFunc))
+            randFunc.setChild(grow(depth +1 , randFunc))
         }
         return randFunc
     }
@@ -129,10 +131,11 @@ class RoboTree {
     def treeString
     def treeToString(){
         treeString = ''
-        recurseString()
+        recurseString(head)
         return treeString
     }
-    def recurseString(node=head){
+    def recurseString(node){
+        println"node = ${node == null}"
         treeString += node.String()
         if(node.arity == 1){
             treeString += '('

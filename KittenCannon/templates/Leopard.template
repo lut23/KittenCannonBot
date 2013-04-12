@@ -1,7 +1,7 @@
 import robocode.*;
 import robocode.util.Utils;
 
-public class Leopard extends AdvancedRobot {
+public class Individual_${id} extends AdvancedRobot {
 	
 /* Leopard by Exauge.
  * Current Version: 1.1.019 - 14:21 05-09-2010

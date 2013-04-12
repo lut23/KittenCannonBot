@@ -5,6 +5,6 @@ class HeadingNode {
     def arity = 0
     // gets the heading of your robot
     def String(){
-        return "getHeadingRadians()"
+        return "e.getHeadingRadians()"
     }
 }

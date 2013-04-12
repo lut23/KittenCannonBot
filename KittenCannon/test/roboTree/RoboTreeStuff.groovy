@@ -41,12 +41,17 @@ class RoboTreeStuff extends Specification {
     def 'tree to string stuff'(){
         when:
         def tree = new RoboTree()
+        def pine = new RoboTree()
+        def fur = new RoboTree()
         tree.head = new AbsoluteNode()
-        tree.head.child = new HeadingNode()
+        tree.head.child = new NearAbsoluteNode()
+        tree.head.child.child = new RelativeNode()
+        tree.head.child.child.child = new BearingsNode()
         def string = tree.treeToString()
+       
         
         then:
-        string == "Utils.normalAbsoluteAngle(getHeadingRadians())"
+        string == "Utils.normalAbsoluteAngle(Utils.normalNearAbsoluteAngle(Utils.normalRelativeAngle(e.getBearingRadians())))"
     }
 
 }

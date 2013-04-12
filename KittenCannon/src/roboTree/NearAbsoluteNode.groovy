@@ -8,4 +8,7 @@ class NearAbsoluteNode {
     def String(){
         return "Utils.normalNearAbsoluteAngle"
     }
+    def setChild(node){
+        child = node
+    }
 }
