@@ -45,6 +45,11 @@ class RoboTree {
         else if(node instanceof VelocityNode){
 
             clone = new VelocityNode()
+        }else if(node instanceof PlusNode){
+            clone = new PlusNode()
+        }
+        else if(node instanceof MinusNode){
+            clone = new MinusNode()
         }
         return clone
     }
@@ -58,6 +63,12 @@ class RoboTree {
             treeNode.setChild(cloneNode(node.getChild()))
             treeNode.child.parent = treeNode
             recurseClone(treeNode.getChild(),node.getChild())
+
+            if(node.arity == 2){
+                treeNode.setChild2(cloneNode(node.getChild2()))
+                treeNode.child2.parent = treeNode
+                recurseClone(treeNode.getChild2())
+            }
         }
     }
     def size(node = head){
@@ -71,7 +82,12 @@ class RoboTree {
             size+= 1
             calcSize(node.getChild())
         }
-        else{
+        if(node.arity == 2){
+            size+= 1
+            calcSize(node.getChild())
+            calcSize(node.getChild2())
+        }
+        if(node.arity == 0){
             size += 1
             return
         }
@@ -85,10 +101,12 @@ class RoboTree {
         def nAbs = new NearAbsoluteNode()
         def relative = new RelativeNode()
         def velocity = new VelocityNode()
-        def functions = [absNode,nAbs,relative,bearing,gun,heading,velocity]
+        def Plus = new PlusNode()
+        def Minus = new MinusNode()
+        def functions = [absNode,nAbs,relative,bearing,gun,heading,velocity,Plus,Minus]
 
         if(depth >= max){
-            randFunc = functions[rand.nextInt(4)+3]
+            randFunc = functions[rand.nextInt(4)+ 3]
             randFunc.parent = node
             return randFunc
         }
@@ -96,11 +114,14 @@ class RoboTree {
         if(head == null){
             head = randFunc
             if(head.arity == 0) return head
-            
+
         }
         randFunc.parent = node
         if(randFunc.arity != 0){
             randFunc.setChild(grow(depth +1 , randFunc))
+            if(randFunc.arity == 2){
+                randFunc.setChild2(grow(depth+1, randFunc))
+            }
         }
         return randFunc
     }
@@ -110,6 +131,7 @@ class RoboTree {
         returnNode = null
         nodeCounter = 0
         findNode(number)
+        println returnNode
         return returnNode
     }
     def findNode(node = head,number){
@@ -117,11 +139,19 @@ class RoboTree {
             returnNode = node
             return
         }else{
+            println node
             if(node.arity == 1) {
 
                 nodeCounter+= 1
 
-                findNode(node.getChild(), number)
+                findNode(node.child, number)
+            }
+            if(node.arity == 2){
+                nodeCounter+= 1
+
+                findNode(node.child, number)
+                nodeCounter +=1
+                findNode(node.child2,number)
             }
             else{
                 return
@@ -135,12 +165,25 @@ class RoboTree {
         return treeString
     }
     def recurseString(node){
-        println"node = ${node == null}"
-        treeString += node.String()
+        if(node.arity <= 1){
+            treeString += node.String()
+        }
         if(node.arity == 1){
+
             treeString += '('
             recurseString(node.child)
             treeString += ')'
+
+        }
+        if(node.arity == 2){
+            treeString += '('
+            recurseString(node.child)
+            treeString += ')'
+            treeString += node.String()
+            treeString += '('
+            recurseString(node.child2)
+            treeString += ')'
+
         }
     }
     def getHead(){
