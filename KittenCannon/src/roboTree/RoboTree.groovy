@@ -1,16 +1,34 @@
 package roboTree
+
 import java.util.Random
+import applications.robocode.*
 class RoboTree {
     def max = 1000
     def head
     def rand = new Random()
     def size
-
+    def id
+    def quality
+    def battleRunner = new BattleRunner("templates/battle.template")
+    def values
+    def robotBuilder = new RobotBuilder("templates/Leopard.template")
+    
+    def terminate(best, qualityOfBest){
+        return qualityOfBest >=2000
+        
+    }
+    def quality(){
+        return quality
+    }
     def run(){
-
+        values = ["id" : id, "new_angle": treeToString()]
+        robotBuilder.buildJarFile(values)
+        battleRunner.buildBattleFile(id)
+        quality = battleRunner.runBattle(id)
     }
     def create(){
         grow(1,head)
+        run()
     }
     def trees
     def clone(){
@@ -58,16 +76,16 @@ class RoboTree {
             treeNode = cloneNode(head)
             trees = treeNode
         }
-        if(node.arity == 1) {
+        if(node.arity !=0) {
 
-            treeNode.setChild(cloneNode(node.getChild()))
+            treeNode.child = (cloneNode(node.child))
             treeNode.child.parent = treeNode
-            recurseClone(treeNode.getChild(),node.getChild())
+            recurseClone(treeNode.child,node.child)
 
             if(node.arity == 2){
-                treeNode.setChild2(cloneNode(node.getChild2()))
+                treeNode.child2 = (cloneNode(node.getChild2()))
                 treeNode.child2.parent = treeNode
-                recurseClone(treeNode.getChild2())
+                recurseClone(treeNode.child2,node.child)
             }
         }
     }
@@ -131,7 +149,6 @@ class RoboTree {
         returnNode = null
         nodeCounter = 0
         findNode(number)
-        println returnNode
         return returnNode
     }
     def findNode(node = head,number){
@@ -139,7 +156,6 @@ class RoboTree {
             returnNode = node
             return
         }else{
-            println node
             if(node.arity == 1) {
 
                 nodeCounter+= 1

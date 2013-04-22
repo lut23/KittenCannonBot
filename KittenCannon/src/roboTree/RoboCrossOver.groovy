@@ -12,7 +12,7 @@ class RoboCrossOver {
         return biggestsize
     }
 
-    def crossover(fatherTree, motherTree, FPoint = null, MPoint = null){
+    def crossover(fatherTree, motherTree, FPoint = null, MPoint = null,Id){
         def dadTree = fatherTree.clone()
         def momTree = motherTree.clone()
         def biggestSize = biggestSize(dadTree,momTree)
@@ -30,8 +30,6 @@ class RoboCrossOver {
 
         def fatherNode = dadTree.getNode(fatherPoint)
         def motherNode = momTree.getNode(motherPoint)
-        println fatherNode
-        println motherNode
         def grandFather
         def grandMother
 
@@ -146,7 +144,10 @@ class RoboCrossOver {
                 }
             }
         }
-
+        dadTree.id = ++Id
+        dadTree.run()
+        momTree.id = ++Id
+        momTree.run()
         return [dadTree,momTree]
     }
 }

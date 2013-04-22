@@ -53,6 +53,7 @@ class TestRoboCodeBattle extends Specification {
 		
         when:
 		def score = battleRunner.runBattle(id)
+     
 
         then:
 		score >= 0

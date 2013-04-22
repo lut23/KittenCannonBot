@@ -1,4 +1,5 @@
 package applications.robocode
+import roboTree.*
 
 /*
  *   id : an id used in the generation of the name of the class.

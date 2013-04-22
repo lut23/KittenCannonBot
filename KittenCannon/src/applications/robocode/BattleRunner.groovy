@@ -38,7 +38,7 @@ class BattleRunner {
         assert proc.err.text.equals("")
         def lines = proc.in.text.split("\n")
         def result = false
-        def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+       def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
         lines.each { line ->
             def m = (line =~ pattern)
             if (m) {
