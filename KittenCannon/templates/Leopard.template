@@ -1,8 +1,9 @@
 package evolved;
 import robocode.*;
 import robocode.util.Utils;
+import java.awt.Color;
 
-public class Individual_${id} extends AdvancedRobot {
+public class KittenCannon_${id} extends AdvancedRobot {
 	
 /* Leopard by Exauge.
  * Current Version: 1.1.019 - 14:21 05-09-2010
@@ -20,6 +21,7 @@ public class Individual_${id} extends AdvancedRobot {
 	static double eEner; // enemy energy
 	
 	public void run() {
+		setColors(Color.lightGray, Color.cyan, Color.gray, Color.magenta, Color.magenta);
 		setTurnRadarRight(Double.POSITIVE_INFINITY); // turn the radar right an infinite amount
 	}
 	

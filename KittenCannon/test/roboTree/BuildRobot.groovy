@@ -8,10 +8,8 @@ class BuildRobot extends Specification {
     def values
     def robotBuilder = new RobotBuilder("templates/Leopard.template")
     def battleRunner= new BattleRunner("templates/battle.template")
-    def tree = new RoboTree()
-    tree.create()
-    def id = 12321
-    values = ["id" : id, "new_angle": tree.treeToString()]
+    def id = 2141
+    values = ["id" : id, "new_angle": 'e.getBearingRadians()']
     
    robotBuilder.buildJarFile(values)
    battleRunner.buildBattleFile(id)

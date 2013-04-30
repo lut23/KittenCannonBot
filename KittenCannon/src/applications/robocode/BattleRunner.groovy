@@ -37,8 +37,8 @@ class BattleRunner {
         assert proc.exitValue() == 0
         assert proc.err.text.equals("")
         def lines = proc.in.text.split("\n")
-        def result = false
-       def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+        def result
+       def pattern = ~/evolved\.KittenCannon_${id}\s+\d+\s+\W\d+\W+\d+\s+\d+\s+(\d+)/
         lines.each { line ->
             def m = (line =~ pattern)
             if (m) {
@@ -54,7 +54,7 @@ class BattleRunner {
     
     def linkJarFile(id) {
         def robotDir = new File("${userHome}/robocode/robots/")
-        def command = "ln -s ${robotDirectoryAbsolute}/Individual_${id}.jar ."
+        def command = "ln -s ${robotDirectoryAbsolute}/KittenCannon_${id}.jar ."
         def proc = command.execute(null, robotDir)
         proc.waitFor()
         assert proc.err.text.equals("")

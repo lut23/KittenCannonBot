@@ -85,6 +85,9 @@ class RoboTreeStuff extends Specification {
         treeArray[0].head instanceof VelocityNode
         treeArray[1].head instanceof BearingsNode
         
+        cleanup:
+        clean([10,11])
+        
     }
     def'test clone with size'(){
         when:
@@ -108,12 +111,14 @@ class RoboTreeStuff extends Specification {
         pine.head.child = new VelocityNode()
       
         def pineArray = cross.crossover(tree,pine,1,1,5)
-        def treeArray = cross.crossover(tree,pine,0,1,6)
+        def treeArray = cross.crossover(tree,pine,0,1,20)
         then:
         treeArray[0].head instanceof VelocityNode
         treeArray[1].head.child instanceof PlusNode
         pineArray[0].head.child instanceof VelocityNode
         pineArray[1].head.child instanceof BearingsNode
+        cleanup:
+        clean([6,7,21,22])
     }
     def 'test tree id stuff'(){
         when:
@@ -133,5 +138,36 @@ class RoboTreeStuff extends Specification {
         g == 7
         z == 6
         
+    }
+    def'randConstNode stuff'(){
+        when:
+          def tree = new RoboTree()
+          def constant = new RandConstantNode()
+          tree.head = constant
+          def constClone = tree.clone()
+        then:
+            constant.value.toString() == constant.String()
+            constClone.head.value.toString() == constant.String()
+    }
+    def clean(arrId){
+        for(id in arrId){
+        removeJavaFile(id)
+        removeClassFile(id)
+        removePropertiesFile(id)
+        
+        }
+        
+    }
+    def removeJavaFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.java").delete()
+    }
+
+    def removeClassFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.class").delete()
+        //new File("evolved_robots/evolved/Individual_${id}\$MicroEnemy.class").delete()
+    }
+    
+    def removePropertiesFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.properties").delete()
     }
 }

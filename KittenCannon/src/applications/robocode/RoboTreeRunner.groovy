@@ -26,9 +26,10 @@ static main(args){
     
     
     def coolBest = algorithm.maximize(problem: tree)
-    println coolBest[0].quality()
-    println algorithm.toString()
-    println 'size ${coolBest[0].size()}'
+   
+   
+    println "quality = ${coolBest[0].quality}"
+    println "size ${coolBest[0].size()}"
     println coolBest[1]
     }
     

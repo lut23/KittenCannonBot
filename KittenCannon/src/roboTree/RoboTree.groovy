@@ -14,7 +14,7 @@ class RoboTree {
     def robotBuilder = new RobotBuilder("templates/Leopard.template")
     
     def terminate(best, qualityOfBest){
-        return qualityOfBest >=2000
+        return qualityOfBest >=500
         
     }
     def quality(){
@@ -24,7 +24,8 @@ class RoboTree {
         values = ["id" : id, "new_angle": treeToString()]
         robotBuilder.buildJarFile(values)
         battleRunner.buildBattleFile(id)
-        quality = battleRunner.runBattle(id)
+        quality = battleRunner.runBattle(id)/30
+        clean(id)
     }
     def create(){
         grow(1,head)
@@ -68,6 +69,22 @@ class RoboTree {
         }
         else if(node instanceof MinusNode){
             clone = new MinusNode()
+        }
+        else if(node instanceof TimesNode){
+            clone = new TimesNode()
+        }
+        else if(node instanceof SinNode){
+            clone = new SinNode()
+        }
+        else if(node instanceof CosNode){
+            clone = new CosNode()
+        }
+        else if(node instanceof PiNode ){
+            clone = new PiNode()
+        }
+        else if(node instanceof RandConstantNode){
+            clone = new RandConstantNode()
+            clone.value = node.value
         }
         return clone
     }
@@ -121,10 +138,15 @@ class RoboTree {
         def velocity = new VelocityNode()
         def Plus = new PlusNode()
         def Minus = new MinusNode()
-        def functions = [absNode,nAbs,relative,bearing,gun,heading,velocity,Plus,Minus]
+        def Times = new TimesNode()
+        def Sin = new SinNode()
+        def Cos = new CosNode()
+        def Const = new RandConstantNode()
+        def Pi = new PiNode()
+        def functions = [absNode,nAbs,relative,bearing,gun,heading,velocity,Pi,Const,Sin,Cos,Plus,Minus,Times]
 
         if(depth >= max){
-            randFunc = functions[rand.nextInt(4)+ 3]
+            randFunc = functions[rand.nextInt(4)+ 5]
             randFunc.parent = node
             return randFunc
         }
@@ -208,5 +230,29 @@ class RoboTree {
     def setHead(node){
         head = node
     }
+    
+    def clean(arrId){
+        for(id in arrId){
+        removeJavaFile(id)
+        removeClassFile(id)
+        removePropertiesFile(id)
+        
+        }
+        
+    }
+    
+    def removeJavaFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.java").delete()
+    }
+
+    def removeClassFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.class").delete()
+        //new File("evolved_robots/evolved/Individual_${id}\$MicroEnemy.class").delete()
+    }
+    
+    def removePropertiesFile(id) {
+        new File("evolved_robots/evolved/KittenCannon_${id}.properties").delete()
+    }
+
 
 }

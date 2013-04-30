@@ -16,7 +16,7 @@ class RobotBuilder {
         buildClassFile(values)
         buildPropertiesFile(values)
         def id = values['id']
-        def fileNamePrefix = "Individual_${id}"
+        def fileNamePrefix = "KittenCannon_${id}"
         def command = "jar -cf ${fileNamePrefix}.jar"
         [".java", ".class",  ".properties"].each { suffix ->
             command += " ${robotPackage}/${fileNamePrefix}${suffix}"
@@ -30,7 +30,7 @@ class RobotBuilder {
 
     def buildPropertiesFile(values) {
         def id = values['id']
-        def filenamePrefix = "Individual_${id}"
+        def filenamePrefix = "KittenCannon_${id}"
         def propertiesFileName = "${filenamePrefix}.properties"
         def propertiesFile = new File("${robotDirectory}/${robotPackage}/${propertiesFileName}")
         propertiesFile << "robots: ${robotPackage}/${filenamePrefix}.class"
@@ -59,7 +59,7 @@ class RobotBuilder {
 
     def makeJavaFileName(values) {
         def id = values['id']
-        def filename = "Individual_${id}.java"
+        def filename = "KittenCannon_${id}.java"
     }
 
     private File createFile(javaFileName) {
