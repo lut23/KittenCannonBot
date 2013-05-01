@@ -11,4 +11,8 @@ class SinNode {
     def setChild(node){
         child = node
     }
+    def clone(){
+        def tempNode = new SinNode()
+        return tempNode
+    }
 }

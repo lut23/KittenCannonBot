@@ -15,4 +15,8 @@ class PlusNode {
     def setChild2(node){
         child2 = node
     }
+    def clone(){
+        def tempNode = new PlusNode()
+        return tempNode
+    }
 }

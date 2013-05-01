@@ -11,4 +11,8 @@ class AbsoluteNode {
     def String(){
         return "Utils.normalAbsoluteAngle"
     }
+    def clone(){
+        def tempNode = new AbsoluteNode()
+        return tempNode
+    }
 }

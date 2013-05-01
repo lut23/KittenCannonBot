@@ -28,7 +28,7 @@ static main(args){
     def coolBest = algorithm.maximize(problem: tree)
    
    
-    println "quality = ${coolBest[0].quality}"
+    println "best id ${coolBest[0].id}"
     println "size ${coolBest[0].size()}"
     println coolBest[1]
     }

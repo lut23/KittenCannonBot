@@ -7,4 +7,8 @@ class VelocityNode {
     def String(){
         return "e.getVelocity()"
     }
+    def clone(){
+        def tempNode = new VelocityNode()
+        return tempNode
+    }
 }

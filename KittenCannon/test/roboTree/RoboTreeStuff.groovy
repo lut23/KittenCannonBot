@@ -32,15 +32,25 @@ class RoboTreeStuff extends Specification {
     def'clone stuff'(){
         when:
         def tree = new RoboTree()
-        tree.head = new AbsoluteNode()
+        tree.head = new PlusNode()
         tree.head.child = new HeadingNode()
-        def clone = tree.clone()
+        tree.head.child2 = new TimesNode()
+        tree.head.child2.child = new RandConstantNode()
+        tree.head.child2.child2 = new GunHeadingNode()
+        def clon = tree.clone()
+//        println "tree ${tree.head.child2.child}"
+//        println "clone ${clon.head.child2.child}"
+//        println "clone ${clon.head.child2.child2}"
+//        println "clone ${clon.head.child2}"
         
         then:
-        clone.head != tree.head
-        clone.head instanceof AbsoluteNode
-        clone.head.child != tree.head.child
-        clone.head.child instanceof HeadingNode
+        clon.head != tree.head
+        clon.head instanceof PlusNode
+        clon.head.child != tree.head.child
+        clon.head.child instanceof HeadingNode
+        clon.head.child2 instanceof TimesNode
+        clon.head.child2.child instanceof RandConstantNode
+        clon.head.child2.child2 instanceof GunHeadingNode
     }
     def 'tree to string stuff'(){
         when:
@@ -89,6 +99,18 @@ class RoboTreeStuff extends Specification {
         clean([10,11])
         
     }
+    
+    def 'Node clone stuff'(){
+        when:
+        def randy = new RandConstantNode()
+        def randyClone = randy.clone()
+        
+        then:
+        randyClone instanceof RandConstantNode
+        randyClone.value == randy.value
+        randyClone != randy
+    }
+    
     def'test clone with size'(){
         when:
         def tree = new RoboTree()

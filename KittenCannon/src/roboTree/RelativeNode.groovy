@@ -11,4 +11,8 @@ class RelativeNode {
     def setChild(node){
         child = node
     }
+    def clone(){
+        def tempNode = new RelativeNode()
+        return tempNode
+    }
 }

@@ -15,5 +15,9 @@ class MinusNode {
     def setChild2(node){
         child2 = node
     }
+    def clone(){
+        def tempNode = new MinusNode()
+        return tempNode
+    }
 }
 

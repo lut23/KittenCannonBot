@@ -8,4 +8,8 @@ class GunHeadingNode {
     def String(){
         return "getGunHeadingRadians()"
     }
+    def clone(){
+        def tempNode = new GunHeadingNode()
+        return tempNode
+    }
 }

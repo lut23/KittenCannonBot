@@ -7,4 +7,8 @@ class BearingsNode {
     def String(){
         return "e.getBearingRadians()"
     }
+    def clone(){
+        def tempNode = new BearingsNode()
+        return tempNode
+    }
 }

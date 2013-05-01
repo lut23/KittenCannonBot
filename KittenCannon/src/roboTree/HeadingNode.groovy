@@ -7,4 +7,8 @@ class HeadingNode {
     def String(){
         return "e.getHeadingRadians()"
     }
+    def clone(){
+        def tempNode = new HeadingNode()
+        return tempNode
+    }
 }

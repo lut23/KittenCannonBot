@@ -12,16 +12,18 @@ class RoboTree {
     def battleRunner = new BattleRunner("templates/battle.template")
     def values
     def robotBuilder = new RobotBuilder("templates/Leopard.template")
-    
+
     def terminate(best, qualityOfBest){
         return qualityOfBest >=500
-        
+
     }
     def quality(){
         return quality
     }
     def run(){
-        values = ["id" : id, "new_angle": treeToString()]
+        def str = treeToString()
+        values = ["id" : id, "new_angle": str]
+        println "Tree ${id} string ${str}"
         robotBuilder.buildJarFile(values)
         battleRunner.buildBattleFile(id)
         quality = battleRunner.runBattle(id)/30
@@ -83,28 +85,40 @@ class RoboTree {
             clone = new PiNode()
         }
         else if(node instanceof RandConstantNode){
-            clone = new RandConstantNode()
-            clone.value = node.value
+            clone =  new RandConstantNode()
+            clone.setValue(node.value)
         }
+        
         return clone
     }
     def recurseClone(treeNode,node){
+        
         if(node == head){
             treeNode = cloneNode(head)
             trees = treeNode
+            
         }
-        if(node.arity !=0) {
+        
+        if(node.arity == 1) {
 
-            treeNode.child = (cloneNode(node.child))
+            treeNode.setChild(cloneNode(node.child))
+            
             treeNode.child.parent = treeNode
-            recurseClone(treeNode.child,node.child)
-
-            if(node.arity == 2){
-                treeNode.child2 = (cloneNode(node.getChild2()))
-                treeNode.child2.parent = treeNode
-                recurseClone(treeNode.child2,node.child)
-            }
+            recurseClone(treeNode.child, node.child)
         }
+        else if(node.arity == 2){
+           
+            treeNode.setChild(cloneNode(node.child))
+            
+            treeNode.child.parent = treeNode
+            recurseClone(treeNode.child, node.child)
+
+            treeNode.setChild2((cloneNode(node.child2)))
+            
+            treeNode.child2.parent = treeNode
+            recurseClone(treeNode.child2, node.child2)
+        }
+
     }
     def size(node = head){
         size = 0
@@ -115,12 +129,12 @@ class RoboTree {
 
         if(node.arity == 1) {
             size+= 1
-            calcSize(node.getChild())
+            calcSize(node.child)
         }
         if(node.arity == 2){
             size+= 1
-            calcSize(node.getChild())
-            calcSize(node.getChild2())
+            calcSize(node.child)
+            calcSize(node.child2)
         }
         if(node.arity == 0){
             size += 1
@@ -150,7 +164,7 @@ class RoboTree {
             randFunc.parent = node
             return randFunc
         }
-        randFunc = functions[rand.nextInt(7)]
+        randFunc = functions[rand.nextInt(functions.size())]
         if(head == null){
             head = randFunc
             if(head.arity == 0) return head
@@ -158,9 +172,9 @@ class RoboTree {
         }
         randFunc.parent = node
         if(randFunc.arity != 0){
-            randFunc.setChild(grow(depth +1 , randFunc))
+            randFunc.child = (grow(depth +1 , randFunc))
             if(randFunc.arity == 2){
-                randFunc.setChild2(grow(depth+1, randFunc))
+                randFunc.child2 = (grow(depth+1, randFunc))
             }
         }
         return randFunc
@@ -230,17 +244,17 @@ class RoboTree {
     def setHead(node){
         head = node
     }
-    
+
     def clean(arrId){
         for(id in arrId){
-        removeJavaFile(id)
-        removeClassFile(id)
-        removePropertiesFile(id)
-        
+            removeJavaFile(id)
+            removeClassFile(id)
+            removePropertiesFile(id)
+
         }
-        
+
     }
-    
+
     def removeJavaFile(id) {
         new File("evolved_robots/evolved/KittenCannon_${id}.java").delete()
     }
@@ -249,7 +263,7 @@ class RoboTree {
         new File("evolved_robots/evolved/KittenCannon_${id}.class").delete()
         //new File("evolved_robots/evolved/Individual_${id}\$MicroEnemy.class").delete()
     }
-    
+
     def removePropertiesFile(id) {
         new File("evolved_robots/evolved/KittenCannon_${id}.properties").delete()
     }

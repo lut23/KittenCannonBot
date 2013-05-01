@@ -3,6 +3,7 @@ package roboTree
 class TimesNode {
     def parent
     def child
+    def child2
     def arity = 2
     // normalNearAbsoluteAngle normalizes angle in range 0Pi to 2Pi and return 0,Pi/2, Pi, 3*Pi/2 or 2*Pi when the angle is near those values
     def String(){
@@ -10,5 +11,12 @@ class TimesNode {
     }
     def setChild(node){
         child = node
+    }
+    def setChild2(node){
+        child2 = node
+    }
+    def clone(){
+        def tempNode = new TimesNode()
+        return tempNode
     }
 }

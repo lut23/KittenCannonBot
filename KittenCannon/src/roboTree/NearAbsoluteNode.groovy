@@ -11,4 +11,8 @@ class NearAbsoluteNode {
     def setChild(node){
         child = node
     }
+    def clone(){
+        def tempNode = new NearAbsoluteNode()
+        return tempNode
+    }
 }
